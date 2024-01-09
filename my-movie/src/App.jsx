@@ -17,7 +17,7 @@ function App() {
   console.log("*********************", isAuthenticated);
 
   return (
-    <Router>
+    <Router basename="/my-movie-app/">
       <Routes>
         <Route
           path="/"
