@@ -1,0 +1,1 @@
+.nav{display:flex;justify-content:space-between;align-items:center;margin:0 1rem}.nav .navLinkWrapper,.nav .navLinkWrapper ul{display:flex;gap:1rem}*{padding:0;margin:0;box-sizing:border-box}body{width:100%}li{list-style:none}a{text-decoration:none}
