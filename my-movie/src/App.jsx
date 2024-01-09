@@ -1,5 +1,5 @@
 import "./App.css";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Utility/privateRoute";
 
 import HomePage from "./Page/HomePage/index.tsx";
