@@ -1,77 +1,72 @@
-//import "./styles.scss";
+import "./style.scss";
+
 //import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Postlogin } from "../../Utility/http";
-//import RegistrationForm from "../../Components/RegistrationForm/index";
+import { Postlogin, fetchData } from "../../Utility/http";
+import RegistrationForm from "../../Component/RegistrationForm";
 import LogInForm from "../../Component/loginForm";
 import useStore from "../../Utility/useStore/store";
 
 const LoginPage = () => {
+  const setUserData = useStore(state => state.setUserData);
+
+  const userData = useStore(state => state.userData);
   const [isToggleOn, setIsToggleOn] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const data = {
-    email: email,
-    password: password,
-  };
-  const setLogInData = useStore((state) => state.setLogInData);
   const setAuthenticated = useStore((state) => state.setAuthenticated);
   const { isAuthenticated } = useStore();
 
-  const GetPost = async (url, isGet) => {
-    setLogInData({ email: data.email, password: data.password });
-    const result = await Postlogin(data, url, isGet);
+  const GetPost = async (body, url, isGet) => {
+    const result = await Postlogin(body, url, isGet);
     console.log(result);
 
     if (result.success === true) {
+      const url = "https://api.escuelajs.co/api/v1/auth/profile";
+      const JWT_TOKEN = result.accessToken;
+
       localStorage.setItem("logKey", JSON.stringify(result));
+      
+      const userDatas = await fetchData(url, JWT_TOKEN);
+      if (userDatas) {
+        console.log('dati ghet arrivati e passati');
+        setUserData(userDatas);
+      }
+      
+      console.log(userData);
+
     } else {
       setIsToggleOn(isAuthenticated);
+      isToggleOn;
     }
     if (result.success) {
       setAuthenticated(result.success);
       navigate("/");
     }
-    if (result.success === false) {
-      setIsToggleOn(isAuthenticated);
-    }
-
-    if (isGet === "postLog" && result.success === true) {
-      console.log("hello");
-    }
+   
   };
 
-  // funzione di togle per far apparire form registrazione
-  /*   const showRegForm = () => {
-    setIsToggleOn(!isToggleOn);
 
-    console.log(isToggleOn);
-  }; */
 
   return (
     <div className="accessContainer">
       <h1 className="title">MyMovie</h1>
 
-      <LogInForm
-        GetPost={GetPost}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-      />
+      <div className="formContainer ">
+        <div className="div1">
+          <LogInForm GetPost={GetPost} />
+        </div>
 
-      {/*  {(loginResult && loginResult.success === true) || !null ? (
-        <p>{loginResult.message}</p>
-      ) : (
-        <p>errore riprova</p>
-      )}
-      <button className="btnToggleReg" onClick={showRegForm}>
-        {isToggleOn !== false ? "Registrati" : "Registrato?"}
-      </button>
+        <button className="btnToggleReg div3" onClick={ ()=>setIsToggleOn(!isToggleOn)}>
+          {!isToggleOn ? "Registrati" : "Registrato?"}
+        </button>
 
-      {isToggleOn === true ? <RegistrationForm GetPost={GetPost} /> : ""} */}
+        <div className="barra div3"></div>
+
+        <div className="div4">
+          {isToggleOn  ? <RegistrationForm GetPost={GetPost} /> : ""}
+        </div>
+      </div>
     </div>
   );
 };

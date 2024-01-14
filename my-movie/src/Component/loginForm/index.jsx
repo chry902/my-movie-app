@@ -1,20 +1,33 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import "./style.scss";
 import { useState } from "react";
 
-const LogInForm = ({ GetPost, setEmail, setPassword, email, password }) => {
+//import logo from "../../assets/flixflow-logo.png";
+
+const LogInForm = ({ GetPost }) => {
+ 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   //funzione che passa ulr credenziali e info della chiamata e fa call func post per log in
   const handleSubmit = async (e) => {
     e.preventDefault(); // evitare evento di reload
     console.log(email, password);
     const url = "https://api.escuelajs.co/api/v1/auth/login";
-
-    GetPost(url, "post");
+    const body = {
+      email: email,
+      password: password,
+    };
+    
+    GetPost(body, url, "post");
   };
+
   return (
     <div className="logInComponent">
-      <form className="formWrapper" onSubmit={handleSubmit}>
+      {/*  <img src={logo} alt="flixflow logo" /> */}
+
+      <form className="formWrapperlogIn" onSubmit={handleSubmit}>
         <input
-          className="input"
+          className="input div1"
           type="email"
           id="email"
           placeholder="Email"
@@ -24,7 +37,7 @@ const LogInForm = ({ GetPost, setEmail, setPassword, email, password }) => {
         />
 
         <input
-          className="input"
+          className="input div2"
           type="password"
           id="password"
           placeholder="Password"
@@ -33,7 +46,7 @@ const LogInForm = ({ GetPost, setEmail, setPassword, email, password }) => {
           //Elemento in ascolto
         />
 
-        <input className="inputSend" type="submit" />
+        <input className="inputSend div3" type="submit" placeholder="SigIn"/>
       </form>
     </div>
   );

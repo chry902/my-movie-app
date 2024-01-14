@@ -13,7 +13,6 @@ const PrivateRoute = ({
 
   const isLog =
     newLocaValueObj?.success || isAuthenticated == true ? true : false;
-  console.log(isAuthenticated, "😅😅😅😅😅😅😅😅😅😅😅😅😅😅😅😅");
 
   return isLog ? <Element {...rest} /> : <Navigate to="/login" />;
 };

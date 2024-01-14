@@ -14,39 +14,39 @@ function App() {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   //const [count, setCount] = useState(0);
 
-  console.log("*********************", isAuthenticated);
-
   return (
-    <Router basename="/my-movie-app/">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute
-              element={HomePage}
-              isAuthenticated={isAuthenticated}
-            />
-          }
-        />
-        <Route
-          path="/film"
-          element={
-            <PrivateRoute element={Film} isAuthenticated={isAuthenticated} />
-          }
-        />
-        <Route
-          path="/preferiri"
-          element={
-            <PrivateRoute
-              element={Preferiti}
-              isAuthenticated={isAuthenticated}
-            />
-          }
-        />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Router>
+    <div className="Container">
+      <Router basename="/my-movie-app/">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute
+                element={HomePage}
+                isAuthenticated={isAuthenticated}
+              />
+            }
+          />
+          <Route
+            path="/film"
+            element={
+              <PrivateRoute element={Film} isAuthenticated={isAuthenticated} />
+            }
+          />
+          <Route
+            path="/preferiri"
+            element={
+              <PrivateRoute
+                element={Preferiti}
+                isAuthenticated={isAuthenticated}
+              />
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

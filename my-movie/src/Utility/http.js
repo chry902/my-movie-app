@@ -18,7 +18,7 @@ const Postlogin = async (data, url, isGet) => {
       return {
         success: true,
         accessToken: accessToken,
-        message: "Accesso effettuato con successo",
+        message: "Chiamata andata a buon fine",
         typeOfGet: isGet,
       };
     } else {
@@ -42,4 +42,30 @@ const Postlogin = async (data, url, isGet) => {
   }
 };
 
-export { Postlogin };
+async function fetchData(url,JWT_TOKEN) {
+  try {
+    const response = await fetch(
+      url,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${JWT_TOKEN}`,
+        },
+      }
+    );
+      if (!response.ok) {
+      throw new Error(
+        `GET response! stato: ${response.status}`
+      );
+    }
+    
+    const data = await response.json();
+    console.log(data, "get");
+    return data;
+  } catch (error) {
+    console.error("Error***:", error);
+  }
+}
+
+export { Postlogin, fetchData };
